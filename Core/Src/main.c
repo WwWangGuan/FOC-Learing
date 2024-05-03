@@ -107,11 +107,13 @@ int main(void) {
 //        HAL_Delay(200);
         RevPark(&FOC.CtrlVolt, &FOC.RevParkVolt, &FOC.theta);
         SVPWM(&FOC.RevParkVolt, &FOC.SwitchTime, &FOC.TripPhaseVolt);
-        printf("Ua:%f", FOC.TripPhaseVolt.Ua);
-        printf("Ub:%f", FOC.TripPhaseVolt.Ub);
-        printf("Uc:%f", FOC.TripPhaseVolt.Uc);
+//        printf("Ua:%f", FOC.TripPhaseVolt.Ua);
+//        printf("Ub:%f", FOC.TripPhaseVolt.Ub);
+//        printf("Uc:%f", FOC.TripPhaseVolt.Uc);
+        printf("%f,%f,%f\n", FOC.TripPhaseVolt.Ua, FOC.TripPhaseVolt.Ub, FOC.TripPhaseVolt.Uc);
+//        printf("%f,%f,%f\n",FOC.SwitchTime.T_a,FOC.SwitchTime.T_b,FOC.SwitchTime.T_c);
         FOC.theta += 1e-3;
-
+//        HAL_Delay(200);
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
