@@ -66,6 +66,14 @@ void Error_Handler(void);
 #define LPUART1_RX_GPIO_Port GPIOA
 #define LD2_Pin GPIO_PIN_5
 #define LD2_GPIO_Port GPIOA
+#define CurrentA_Pin GPIO_PIN_7
+#define CurrentA_GPIO_Port GPIOA
+#define CurrentB_Pin GPIO_PIN_4
+#define CurrentB_GPIO_Port GPIOC
+#define CurrentC_Pin GPIO_PIN_5
+#define CurrentC_GPIO_Port GPIOC
+#define VBAT_Pin GPIO_PIN_2
+#define VBAT_GPIO_Port GPIOB
 #define T_SWDIO_Pin GPIO_PIN_13
 #define T_SWDIO_GPIO_Port GPIOA
 #define T_SWCLK_Pin GPIO_PIN_14

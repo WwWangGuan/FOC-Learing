@@ -1,7 +1,7 @@
 #此文件从模板自动生成! 请勿更改!
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_VERSION 1)
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.26)
 
 # specify cross-compilers and tools
 set(CMAKE_C_COMPILER arm-none-eabi-gcc)
@@ -49,11 +49,11 @@ else ()
     add_compile_options(-Og -g)
 endif ()
 
-include_directories(Core/Inc Drivers/STM32G4xx_HAL_Driver/Inc Drivers/STM32G4xx_HAL_Driver/Inc/Legacy Drivers/CMSIS/Device/ST/STM32G4xx/Include Drivers/CMSIS/Include Middlewares/ST/ARM/DSP/Inc bsp)
+include_directories(Core/Inc Drivers/STM32G4xx_HAL_Driver/Inc Drivers/STM32G4xx_HAL_Driver/Inc/Legacy Drivers/CMSIS/Device/ST/STM32G4xx/Include Drivers/CMSIS/Include Middlewares/ST/ARM/DSP/Inc USB_Device/App USB_Device/Target Middlewares/ST/STM32_USB_Device_Library/Core/Inc Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc bsp)
 
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx)
 
-file(GLOB_RECURSE SOURCES "Library/*.*" "Core/*.*" "Middlewares/*.*" "Drivers/*.*" "bsp/*.*")
+file(GLOB_RECURSE SOURCES "USB_Device/*.*" "Library/*.*" "Core/*.*" "Middlewares/*.*" "Drivers/*.*" "bsp/*.*")
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32G474RETX_FLASH.ld)
 
