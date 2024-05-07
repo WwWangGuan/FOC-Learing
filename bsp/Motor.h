@@ -6,10 +6,12 @@
 #define FOC_MOTOR_H
 
 #define COS_PI_6  0.8660254037844386f
-#define SQRT_3 1.7320508075688772f
-#define VBAT 12
+#define SQRT3_2 0.8660254037844386f
+#define VBAT 0.000001f
+#define SQRT3_BY_3 0.5773502691896257f
 
-#define CtrlPeriod 10
+#define Period 54400
+
 typedef struct {
     float I_a;
     float I_b;
@@ -27,9 +29,12 @@ typedef struct {
 } ParkTrans_T;
 
 typedef struct {
-    float T_a;
-    float T_b;
-    float T_c;
+    float T_a1;
+    float T_a2;
+    float T_b1;
+    float T_b2;
+    float T_c1;
+    float T_c2;
 
 } SwitchTime_T;
 
@@ -57,6 +62,13 @@ typedef struct Motor {
     RevParkTrans_T RevParkVolt; //RevPark变换后的电压
     CtrlVolt_T CtrlVolt;//输出控制电压(d-q坐标系)
     TripPhaseVolt_T TripPhaseVolt;//三相电压值
+
+    float BusVoltage; //母线电压
+
+    float RawAngle; //磁编原始角度值
+    float Angle; // 转子角度值
+
+
 } Motor_T;
 
 void RevPark(CtrlVolt_T *CtrVoltage, RevParkTrans_T *RevParkVolt, float *theta);
@@ -66,5 +78,9 @@ void Clark(SampCurrent_T *Current, ClarkTrans_T *ClarkCurt);
 void Park(ClarkTrans_T *ClarkCurt, ParkTrans_T *ParkCurt, float *theta);
 
 void SVPWM(RevParkTrans_T *RevParkVolt, SwitchTime_T *ST, TripPhaseVolt_T *TPVolt);
+
+float Max(float a, float b);
+
+float Min(float a, float b);
 
 #endif //FOC_MOTOR_H

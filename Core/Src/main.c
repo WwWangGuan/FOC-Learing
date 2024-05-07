@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
-#include "cordic.h"
 #include "fdcan.h"
 #include "hrtim.h"
 #include "i2c.h"
@@ -100,7 +99,6 @@ int main(void)
   MX_GPIO_Init();
   MX_LPUART1_UART_Init();
   MX_ADC2_Init();
-  MX_CORDIC_Init();
   MX_FDCAN2_Init();
   MX_HRTIM1_Init();
   MX_I2C1_Init();
@@ -114,6 +112,18 @@ int main(void)
     FOC.CtrlVolt.U_d = 0.1f;
     FOC.CtrlVolt.U_q = 0;
     FOC.theta = 0;
+
+    HAL_HRTIM_WaveformCountStart(&hhrtim1,HRTIM_TIMERID_MASTER);
+
+    HAL_HRTIM_WaveformCountStart(&hhrtim1,HRTIM_TIMERID_TIMER_A);
+    HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_B);
+    HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_C);
+
+    HAL_HRTIM_WaveformOutputStart(&hhrtim1,HRTIM_OUTPUT_TA1);
+    HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TB1);
+    HAL_HRTIM_WaveformOutputStart(&hhrtim1,HRTIM_OUTPUT_TC1);
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -124,6 +134,12 @@ int main(void)
 //        HAL_Delay(200);
         RevPark(&FOC.CtrlVolt, &FOC.RevParkVolt, &FOC.theta);
         SVPWM(&FOC.RevParkVolt, &FOC.SwitchTime, &FOC.TripPhaseVolt);
+        __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_1, FOC.SwitchTime.T_a1);
+        __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, FOC.SwitchTime.T_a2);
+        __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_1, FOC.SwitchTime.T_b1);
+        __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, FOC.SwitchTime.T_b2);
+        __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_C, HRTIM_COMPAREUNIT_1, FOC.SwitchTime.T_c1);
+        __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_C, HRTIM_COMPAREUNIT_3, FOC.SwitchTime.T_c2);
 //        printf("Ua:%f", FOC.TripPhaseVolt.Ua);
 //        printf("Ub:%f", FOC.TripPhaseVolt.Ub);
 //        printf("Uc:%f", FOC.TripPhaseVolt.Uc);
